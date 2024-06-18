@@ -4,12 +4,12 @@
 
 pkgname=(wf-lua-cjson)
 _pkgver=2.10.12
-pkgver=2.10.12.r303.2bfad8f
-pkgrock=lua-cjson-2.1.0.12-1
+pkgver=2.10.12.r305.c92ecda
+pkgrock=lua-cjson-2.1.0.14-1
 pkgrel=1
 epoch=
 pkgdesc="Lua JSON library"
-arch=("i686" "x86_64" "armv6h" "aarch64")
+arch=("i686" "x86_64" "armv6h" "aarch64" "arm64")
 url="https://github.com/openresty/lua-cjson"
 license=("MIT")
 source=("$pkgname::git+https://github.com/openresty/lua-cjson#branch=master")
@@ -17,14 +17,14 @@ depends=(wf-lua)
 makedepends=(wf-lua-dev)
 sha256sums=("SKIP")
 
-. "/wf/config/runtime-env-vars.sh"
+. "../../config/runtime-env-vars.sh"
 
 . "../templates/git-pkgver.PKGBUILD"
 . "../templates/luarocks-package.PKGBUILD"
 
 prepare() {
 	cd "$pkgname"
-	sed -i -e "s/2\.1\.0\.11/2.1.0.12/g" "$pkgrock".rockspec
+	gsed -i -e "s/2\.1\.0\.11/2.1.0.14/g" "$pkgrock".rockspec
 }
 
 build() {

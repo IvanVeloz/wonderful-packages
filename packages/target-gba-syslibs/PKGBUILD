@@ -15,14 +15,13 @@ source=("$pkgname::git+https://github.com/WonderfulToolchain/target-gba-syslibs#
 depends=()
 makedepends=(
 	toolchain-gcc-arm-none-eabi-binutils
-	toolchain-gcc-arm-none-eabi-gcc
 	toolchain-gcc-arm-none-eabi-picolibc-generic
 	wf-tools
 )
 sha256sums=('SKIP')
 options=(!strip)
 
-. "/wf/config/runtime-env-vars.sh"
+. "../../config/runtime-env-vars.sh"
 
 . "../templates/git-pkgver.PKGBUILD"
 
@@ -35,5 +34,5 @@ build() {
 package() {
 	cd "$pkgname"
 	mkdir -p "$pkgdir$WF_DESTDIR"
-	cp -aR build/target "$pkgdir$WF_DESTDIR"
+	cp -a build/target "$pkgdir$WF_DESTDIR"
 }

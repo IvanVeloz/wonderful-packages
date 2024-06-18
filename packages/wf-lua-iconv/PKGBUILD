@@ -4,11 +4,11 @@
 
 pkgname=(wf-lua-iconv)
 _pkgver=7
-pkgver=7.r87.b761918
+pkgver=7.r100.dbdd9d9
 pkgrel=1
 epoch=
 pkgdesc="Lua iconv wrapper"
-arch=("i686" "x86_64" "armv6h" "aarch64")
+arch=("i686" "x86_64" "armv6h" "aarch64" "arm64")
 url="https://github.com/ittner/lua-iconv"
 license=("MIT")
 source=("$pkgname::git+https://github.com/ittner/lua-iconv#branch=master")
@@ -16,7 +16,7 @@ depends=(wf-lua)
 makedepends=(wf-lua-dev)
 sha256sums=("SKIP")
 
-. "/wf/config/runtime-env-vars.sh"
+. "../../config/runtime-env-vars.sh"
 
 . "../templates/git-pkgver.PKGBUILD"
 
@@ -46,6 +46,9 @@ build() {
 	if [ "$WF_HOST_OS" == "windows" ]; then
 		gcc -c -o iconv.lo $WF_RUNTIME_INCLUDES -O3 -Wall luaiconv.c
 		gcc -o iconv"$WF_LIBRARY_SUFFIX" -shared iconv.lo "$WF_LUA_LDFLAGS" -liconv
+	elif [ "$WF_HOST_OS" == "macos" ]; then
+		gcc -c -o iconv.lo $WF_RUNTIME_INCLUDES -O3 -Wall luaiconv.c
+		gcc -o iconv"$WF_LIBRARY_SUFFIX" -shared iconv.lo $WF_LUA_LDFLAGS -liconv
 	else
 		gcc -c -o iconv.lo $WF_RUNTIME_INCLUDES -fPIC -O3 -Wall luaiconv.c
 		gcc -o iconv"$WF_LIBRARY_SUFFIX" -shared $WF_LUA_LDFLAGS iconv.lo
@@ -57,6 +60,8 @@ check() {
 
 	if [ "$WF_HOST_OS" == "windows" ]; then
 		export LUA_CPATH="C:/msys64/wf/packages/wf-lua-iconv/src/wf-lua-iconv/?.dll"
+	elif [ "$WF_HOST_OS" == "macos" ]; then
+		export LUA_CPATH="/Users/slacker/sources/wonderful-packages/packages/wf-lua-iconv/src/wf-lua-iconv/?.dylib"
 	fi
 	$WF_PATH/bin/wf-lua test_iconv.lua
 }
@@ -65,7 +70,7 @@ package() {
 	cd "$pkgname"
 
 	mkdir -p "$pkgdir$WF_DESTDIR"/doc/wf-lua-iconv
-	cp -a README "$pkgdir$WF_DESTDIR"/doc/wf-lua-iconv/
+	cp -a README* "$pkgdir$WF_DESTDIR"/doc/wf-lua-iconv/
 
 	mkdir -p "$pkgdir$WF_DESTDIR"/lib/lua/5.4
 	cp -a iconv"$WF_LIBRARY_SUFFIX" "$pkgdir$WF_DESTDIR"/lib/lua/5.4

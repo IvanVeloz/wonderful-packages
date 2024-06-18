@@ -6,16 +6,16 @@ pkgname=toolchain-gcc-$GCC_TARGET-binutils
 pkgver=2.42
 epoch=
 pkgdesc="GNU binary utilities"
-arch=("x86_64" "aarch64")
+arch=("x86_64" "aarch64" "arm64")
 url="http://www.gnu.org/software/binutils"
 license=("GPL-3.0-or-later")
 source=("http://ftp.gnu.org/gnu/binutils/binutils-$pkgver.tar.xz")
-depends=(runtime-gcc-libs runtime-musl)
-makedepends=(runtime-musl-dev)
+#depends=(runtime-gcc-libs runtime-musl)
+#makedepends=(runtime-musl-dev)
 groups=(toolchain-gcc-$GCC_TARGET)
 sha256sums=('f6e4d41fd5fc778b06b7891457b3620da5ecea1006c6a4a41ae998109f85a800')
 
-. "/wf/config/runtime-env-vars.sh"
+. "../../config/runtime-env-vars.sh"
 
 prepare() {
 	mkdir -p "binutils-$pkgver-build"
@@ -28,7 +28,6 @@ build() {
 		--target=$GCC_TARGET \
 		--with-bugurl=https://github.com/WonderfulToolchain/wonderful-packages/issues \
 		--without-zstd \
-		--enable-gold \
 		--enable-ld-default \
 		--enable-threads \
 		--enable-lto \

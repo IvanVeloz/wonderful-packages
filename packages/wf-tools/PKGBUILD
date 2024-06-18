@@ -9,16 +9,16 @@ pkgrock=wf-tools-dev-1
 pkgrel=1
 epoch=
 pkgdesc="Wonderful toolchain tools"
-arch=("i686" "x86_64" "armv6h" "aarch64")
+arch=("i686" "x86_64" "armv6h" "aarch64" "arm64")
 url="https://github.com/WonderfulToolchain/wf-tools"
 license=("MIT")
 source=("$pkgname::git+https://github.com/WonderfulToolchain/wf-tools#branch=main")
 groups=(wf-environment)
-depends=(runtime-musl wf-lua wf-lua-filesystem wf-lua-iconv wf-lua-penlight wf-lua-posix wf-lua-toml wf-pacman)
+depends=(wf-lua wf-lua-filesystem wf-lua-iconv wf-lua-penlight wf-lua-posix wf-lua-toml)
 makedepends=(runtime-musl-dev wf-lua-dev)
 sha256sums=('SKIP')
 
-. "/wf/config/runtime-env-vars.sh"
+. "../../config/runtime-env-vars.sh"
 
 . "../templates/git-pkgver.PKGBUILD"
 . "../templates/luarocks-package.PKGBUILD"

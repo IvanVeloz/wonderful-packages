@@ -3,7 +3,7 @@ shopt -s extglob
 
 # wf-pacman sees $WF_PATH as $WF_DESTDIR
 WF_PATH="/opt/wonderful"
-WF_DESTDIR="/"
+WF_DESTDIR="/opt/wonderful"
 WF_USE_MUSL=true
 WF_LIBRARY_SUFFIX=.so
 WF_EXECUTABLE_SUFFIX=
@@ -21,6 +21,13 @@ case `uname` in MINGW*|MSYS*)
 	WF_EXECUTABLE_SUFFIX=.exe
 	WF_LUA_LDFLAGS=-llua
 	WF_HOST_OS=windows
+esac
+
+case `uname` in DARWIN*|Darwin*)
+	WF_USE_MUSL=false
+	WF_LUA_LDFLAGS="-I/opt/homebrew/Cellar/lua/5.4.6/include/lua -L/opt/homebrew/Cellar/lua/5.4.6/lib -llua"
+	WF_LIBRARY_SUFFIX=.dylib
+	WF_HOST_OS=macos
 esac
 
 remove_dependencies() {
