@@ -1,8 +1,8 @@
 # UNOFFICIAL macOS wonderful-packages
 
-Repository containing the build scripts and infrastructure for Wonderful's Pacman-based packaging specifically for macOS.
+Repository containing **unofficial** build scripts and infrastructure based on Wonderful's Pacman-based packaging, specifically for macOS.
 
-Note: Support is not provided by upstream. I am happy to provide you volunteer support on this repo's issue tracker. If you want to report issues upstream, reproduce them using a Linux VM on your Mac with the official sources to rule out macOS specific issues.
+Note: Support is not provided by the Wonderful Toolchain upstream. I am happy to provide you volunteer support on this repo's issue tracker. If you want to report issues upstream, reproduce them using a Linux VM on your Mac with the official sources to rule out macOS specific issues.
 
 ## Supported targets
 
@@ -10,7 +10,7 @@ Listed from most to least supported.
 
 | Target | Description | Container |
 | - | - | - |
-| macos/amd64  | macOS, amd64  | N/A | 
+| macos/arm64  | macOS, arm64  | N/A | 
 | macos/x86_64 | macOS, x86_64 | N/A | 
 
 
