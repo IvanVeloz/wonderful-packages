@@ -4,12 +4,12 @@
 
 if [ "x$GCC_IS_LIBSTDCXX" = "xyes" ]; then
 	pkgname=(toolchain-gcc-$GCC_TARGET-libstdcxx-picolibc)
-	depends=(toolchain-gcc-$GCC_TARGET-gcc toolchain-gcc-$GCC_TARGET-picolibc-generic)
+	depends=(toolchain-gcc-$GCC_TARGET-picolibc-generic)
 	arch=(any)
 else
 	pkgname=(toolchain-gcc-$GCC_TARGET-gcc toolchain-gcc-$GCC_TARGET-gcc-libs)
-	depends=(runtime-gcc-libs runtime-musl toolchain-gcc-$GCC_TARGET-binutils)
-	arch=("x86_64" "aarch64")
+	depends=(toolchain-gcc-$GCC_TARGET-binutils)
+	arch=("x86_64" "aarch64" "arm64")
 fi
 pkgver=14.2.0
 _gccver=14.2.0
@@ -27,9 +27,9 @@ source=("http://ftp.gnu.org/gnu/gcc/gcc-$pkgver/gcc-$pkgver.tar.xz"
         "http://www.mpfr.org/mpfr-$_mpfrver/mpfr-$_mpfrver.tar.xz"
         "http://ftp.gnu.org/gnu/mpc/mpc-$_mpcver.tar.gz"
 	"https://libisl.sourceforge.io/isl-$_islver.tar.xz"
-	"file:///wf/patches/gcc14-poison-system-directories.patch"
-	"file:///wf/patches/gcc13-clang-MJ.patch"
-	"file:///wf/patches/gcc13-multilib-arm-elf"
+	"file:///Users/slacker/sources/wonderful-packages/patches/gcc14-poison-system-directories.patch"
+	"file:///Users/slacker/sources/wonderful-packages/patches/gcc13-clang-MJ.patch"
+	"file:///Users/slacker/sources/wonderful-packages/patches/gcc13-multilib-arm-elf"
 )
 sha256sums=(
 	'a7b39bc69cbf9e25826c5a60ab26477001f7c08d85cec04bc0e29cabed6f3cc9'
@@ -42,7 +42,7 @@ sha256sums=(
 	'SKIP'
 )
 
-. "/wf/config/runtime-env-vars.sh"
+. "../../config/runtime-env-vars.sh"
 
 prepare() {
 	mkdir -p "gcc-build"
@@ -52,7 +52,7 @@ prepare() {
 
 	# These patches are used by the toolchain and most likely necessary.
 	# - HACK: hijack RTEMS's libstdc++ crossconfig for our own purposes (which has the dynamic feature checks we want)
-	sed -i "s/\*-rtems\*/*-unknown*/" libstdc++-v3/configure
+	gsed -i "s/\*-rtems\*/*-unknown*/" libstdc++-v3/configure
 	# - Add -MJ compile_commands.json fragment emitter, matching Clang.
 	patch -p1 <../gcc13-clang-MJ.patch
 
@@ -118,7 +118,7 @@ build() {
 		$build_libstdcxx_arg \
 		"${GCC_EXTRA_ARGS[@]}"
 
-	make
+	make -j10
 }
 
 package_toolchain-gcc-template-gcc() {

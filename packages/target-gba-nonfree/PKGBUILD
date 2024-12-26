@@ -11,7 +11,7 @@ arch=(any)
 url=""
 license=("nonfree")
 source=(
-	"file:///wf/nonfree/gba/header/official.bin"
+	"file:///Users/slacker/Downloads/official.bin"
 )
 depends=()
 makedepends=()
@@ -20,7 +20,7 @@ sha256sums=(
 )
 options=(!strip)
 
-. "/wf/config/runtime-env-vars.sh"
+. "../../config/runtime-env-vars.sh"
 
 package() {
 	mkdir -p "$pkgdir$WF_DESTDIR"

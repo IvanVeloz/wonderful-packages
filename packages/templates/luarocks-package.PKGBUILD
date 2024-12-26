@@ -7,6 +7,10 @@ build_luarocks() {
 		# TODO: Use toolchain-provided Lua build.
 		luarocks \
 			make --tree=./build "$pkgrock".rockspec
+	elif [ "$WF_HOST_OS" == "macos" ]; then
+		# TODO: Use toolchain-provided Lua build.
+		luarocks \
+			make --tree=./build "$pkgrock".rockspec
 	else
 		luarocks-5.4 \
 			LDFLAGS="$WF_RUNTIME_LDFLAGS" \

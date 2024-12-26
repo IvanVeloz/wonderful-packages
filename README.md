@@ -1,6 +1,8 @@
-# wonderful-packages
+# UNOFFICIAL macOS wonderful-packages
 
-Repository containing the build scripts and infrastructure for Wonderful's Pacman-based packaging.
+Repository containing **unofficial** build scripts and infrastructure based on Wonderful's Pacman-based packaging, specifically for macOS.
+
+Note: Support is not provided by the Wonderful Toolchain upstream. I am happy to provide you volunteer support on this repo's issue tracker. If you want to report issues upstream, reproduce them using a Linux VM on your Mac with the official sources to rule out macOS specific issues.
 
 ## Supported targets
 
@@ -8,17 +10,21 @@ Listed from most to least supported.
 
 | Target | Description | Container |
 | - | - | - |
-| linux/x86_64 | Linux, x86_64 | x86_64 |
-| linux/aarch64 | Linux, AArch64 | aarch64 |
-| linux/armv6h | Linux, ARMv6+, hard float | arm32v6 |
-| windows/x86_64 | Windows, x86_64 | N/A | 
+| macos/arm64  | macOS, arm64  | N/A | 
+| macos/x86_64 | macOS, x86_64 | N/A | 
+
 
 ## Guide
 
 As the packaging system is intended for internal use only, the list of tested setups is highly specific:
 
-* For Linux development, Arch Linux on an x86_64 or AArch64 machine is recommended. `python-poetry`, `podman`, `qemu-user-static` and `qemu-user-static-binfmt` should be installed, probably among some others.
-* For Windows development, MSYS2 should be installed. Unlike Linux, development is not containerized; as such, all packages' build dependencies must be installed by the user. Windows-specific instructions are provided at the end of the guide.
+### Downloading dependencies
+
+For macOS development, all you need is clang, brew, and pure grit (and a Mac). Start by installing Homebrew (also known as `brew`). Follow the [instructions](https://brew.sh) on the official website. This will also install clang, so you're all set.
+
+Next, install `poetry` as follows:
+
+    $ brew install poetry
 
 ### Downloading repositories
 
@@ -38,41 +44,24 @@ Example call:
 
     $ ./pkgtool build wf-tools@x86_64,aarch64 target-wswan-examples 
 
-### Building Linux bootstraps
+### Building macOS bootstraps
 
-The Linux bootstraps are effectively self-contained repackagings of a pre-installed `wf-pacman` package, allowing easy end user installation.
+The macOS bootstrap is effectively a self-contained repackagings of a pre-installed `wf-pacman` package, allowing easy end user installation.
 
     $ ./pkgtool build-bootstrap [targets...]
 
 ### Installation details
 
-#### Windows
+#### macOS
 
 Installation instructions:
 
 1. The repository must be installed to `/wf`. While `pkgtool` is directory-agnostic, the `PKGBUILD` scripts are not.
-2. Use the UCRT64 environment to work with `pkgtool`.
-3. Install UCRT64 Python and SSL certificates (required for `mirror`): `pacman -S mingw-w64-ucrt-x86_64-ca-certificates mingw-w64-ucrt-x86_64-python mingw-w64-ucrt-x86_64-python-poetry`.
-4. Install build dependencies (this list is probably not 100% complete): `pacman -S autoconf auitoconf-archive automake base-devel bison flex git libtool lld mingw-w64-ucrt-x86_64-autotools mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-lua-luarocks mingw-w64-ucrt-x86_64-meson mingw-w64-ucrt-x86_64-toolchain nasm ninja`.
-5. Copy `misc/windows/makepkg.conf` to `/etc/makepkg.conf`.
-6. To fix `luarocks` not being able to create directories, you will need to `luarocks install luafilesystem` first, while creating all the erroring directories manually. See [MINGW-packages/#12002](https://github.com/msys2/MINGW-packages/pull/12002).
+2. Install build dependencies, best obtained through [homebrew](https://brew.sh), a non-exhaustive list is: `cmake meson ninja coreutils`
 
 Notes:
 
-* `wf-pacman` is built with MSYS rather than UCRT64. This currently appears to require a separate, manual installation of Poetry via pip.
-* For an unknown reason, `wf-sox` expects `/msys64/usr/share/aclocal` to have the contents of `/usr/share/aclocal`.
-
-## Known issues
-
-### sudo: effective uid is not 0, is /usr/bin/sudo on a file system with the 'nosuid' option set or an NFS file system without root privileges?
-
-On Arch Linux, this can be resolved using the following steps:
-
-1. Edit the following files to replace the trailing flag `F` with `FOC`, or `FP` with `FPOC`:
-  * `/usr/lib/binfmt.d/qemu-arm-static.conf`
-  * `/usr/lib/binfmt.d/qemu-aarch64-static.conf`
-  * etc.
-2. Run `systemctl restart systemd-binfmt` to apply changes.
+* `wf-pacman` is built as statically as possible with Apple's clang
 
 ## License
 

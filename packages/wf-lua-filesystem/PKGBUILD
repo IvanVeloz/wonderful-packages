@@ -4,12 +4,12 @@
 
 pkgname=(wf-lua-filesystem)
 _pkgver=1.8.0
-pkgver=1.8.0.r352.912e067
+pkgver=1.8.0.r355.ff2cbc2
 pkgrock=luafilesystem-scm-1
 pkgrel=1
 epoch=
 pkgdesc="Lua file system library"
-arch=("i686" "x86_64" "armv6h" "aarch64")
+arch=("i686" "x86_64" "armv6h" "aarch64" "arm64")
 url="https://www.lua.org"
 license=("MIT")
 source=(
@@ -21,7 +21,7 @@ sha256sums=(
 	"SKIP"
 )
 
-. "/wf/config/runtime-env-vars.sh"
+. "../../config/runtime-env-vars.sh"
 
 . "../templates/git-pkgver.PKGBUILD"
 . "../templates/luarocks-package.PKGBUILD"
