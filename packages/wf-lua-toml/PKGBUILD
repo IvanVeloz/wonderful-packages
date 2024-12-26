@@ -8,7 +8,7 @@ pkgver=0.4.0.r47.44a4056
 pkgrel=1
 epoch=
 pkgdesc="Lua TOML library"
-arch=("i686" "x86_64" "armv6h" "aarch64")
+arch=("i686" "x86_64" "armv6h" "aarch64" "arm64")
 url="https://github.com/LebJe/toml.lua"
 license=("MIT")
 source=(
@@ -22,7 +22,7 @@ sha256sums=(
 	"SKIP"
 )
 
-. "/wf/config/runtime-env-vars.sh"
+. "../../config/runtime-env-vars.sh"
 
 . "../templates/git-pkgver.PKGBUILD"
 
@@ -67,6 +67,6 @@ package() {
 	cd "$pkgname"
 
 	mkdir -p "$pkgdir$WF_DESTDIR"/lib/lua/5.4
-	cp -a build/toml"$WF_LIBRARY_SUFFIX" "$pkgdir$WF_DESTDIR"/lib/lua/5.4
+	cp -a build/toml.so "$pkgdir$WF_DESTDIR"/lib/lua/5.4/toml.so
 }
 

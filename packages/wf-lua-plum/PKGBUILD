@@ -9,7 +9,7 @@ pkgrock=lua-plum-dev-1
 pkgrel=1
 epoch=
 pkgdesc="Lua bindings for libplum image library"
-arch=("i686" "x86_64" "armv6h" "aarch64")
+arch=("i686" "x86_64" "armv6h" "aarch64" "arm64")
 url="https://github.com/asiekierka/lua-plum"
 license=("MIT")
 source=("$pkgname::git+https://github.com/asiekierka/lua-plum#branch=main")
@@ -17,7 +17,7 @@ depends=(wf-lua)
 makedepends=(wf-lua-dev)
 sha256sums=("SKIP")
 
-. "/wf/config/runtime-env-vars.sh"
+. "../../config/runtime-env-vars.sh"
 
 . "../templates/git-pkgver.PKGBUILD"
 . "../templates/luarocks-package.PKGBUILD"

@@ -14,7 +14,7 @@ source=("$pkgname::git+https://github.com/lunarmodules/Penlight#branch=master")
 depends=(wf-lua)
 sha256sums=("SKIP")
 
-. "/wf/config/runtime-env-vars.sh"
+. "../../config/runtime-env-vars.sh"
 
 . "../templates/git-pkgver.PKGBUILD"
 

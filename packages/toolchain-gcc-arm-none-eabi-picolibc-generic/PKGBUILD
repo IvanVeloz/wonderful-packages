@@ -16,7 +16,7 @@ source=(
 	"crt0.c"
 	"cross-thumb.txt"
 )
-depends=(toolchain-gcc-arm-none-eabi-binutils toolchain-gcc-arm-none-eabi-gcc)
+depends=(toolchain-gcc-arm-none-eabi-binutils)
 groups=(toolchain-gcc-arm-none-eabi)
 sha256sums=(
 	'SKIP'
@@ -25,7 +25,7 @@ sha256sums=(
 )
 options=(!strip)
 
-. "/wf/config/runtime-env-vars.sh"
+. "../../config/runtime-env-vars.sh"
 
 prepare() {
 	mkdir -p picolibc-build
@@ -77,5 +77,5 @@ package() {
 	wf_relocate_path_to_destdir
 
 	rm toolchain/gcc-arm-none-eabi/arm-none-eabi/lib/picolibc*.ld
-	cp /wf/patches/picolibc.specs toolchain/gcc-arm-none-eabi/arm-none-eabi/lib/
+	cp /Users/slacker/sources/wonderful-packages/patches/picolibc.specs toolchain/gcc-arm-none-eabi/arm-none-eabi/lib/
 }
