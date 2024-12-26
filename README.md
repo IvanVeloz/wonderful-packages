@@ -18,7 +18,13 @@ Listed from most to least supported.
 
 As the packaging system is intended for internal use only, the list of tested setups is highly specific:
 
-* For macOS development, all you need is clang, brew, and pure grit (and a Mac)
+### Downloading dependencies
+
+For macOS development, all you need is clang, brew, and pure grit (and a Mac). Start by installing Homebrew (also known as `brew`). Follow the [instructions](https://brew.sh) on the official website. This will also install clang, so you're all set.
+
+Next, install `poetry` as follows:
+
+    $ brew install poetry
 
 ### Downloading repositories
 
